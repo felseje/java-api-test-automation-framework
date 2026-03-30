@@ -1,0 +1,93 @@
+# ======================
+# Build Folders
+# ======================
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# ======================
+# Maven & Gradle
+# ======================
+# Maven wrapper já incluído acima
+.gradle/
+build/
+
+# ======================
+# IDEs
+# ======================
+# IntelliJ IDEA
+/.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VS Code
+.vscode/
+
+# ======================
+# Test Reports & Artifacts
+# ======================
+target/surefire-reports/
+target/failsafe-reports/
+target/site/failsafe-report/
+target/site/surefire-report/
+target/site/jacoco/
+*.jacoco
+*.exec
+
+# ======================
+# Logs
+# ======================
+*.log
+hs_err_pid*
+*.hprof
+
+# ======================
+# Temporary / Backup Files
+# ======================
+*.tmp
+*.bak
+*.swp
+*.swo
+*.orig
+
+# ======================
+# Binary / Compiled Files
+# ======================
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# ======================
+# OS Files
+# ======================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+# Linux
+*~

@@ -1,20 +1,20 @@
 package io.github.felseje.apitestautomation.core.request;
 
-import io.github.felseje.apitestautomation.core.response.ResponseContext;
+import io.github.felseje.apitestautomation.core.response.ApiResponse;
 import io.github.felseje.apitestautomation.util.ArgumentValidator;
 
 import java.util.function.Supplier;
 
-public class RequestCall {
+public class ApiRequest {
 
-    private final Supplier<ResponseContext> action;
+    private final Supplier<ApiResponse> action;
 
-    public RequestCall(Supplier<ResponseContext> action) {
+    public ApiRequest(Supplier<ApiResponse> action) {
         ArgumentValidator.requireNotNull(action, "The 'action' cannot be null");
         this.action = action;
     }
 
-    public ResponseContext execute() {
+    public ApiResponse execute() {
         return action.get();
     }
 

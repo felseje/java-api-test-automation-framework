@@ -1,6 +1,6 @@
 package io.github.felseje.apitestautomation.core.request;
 
-import io.github.felseje.apitestautomation.core.response.ResponseContext;
+import io.github.felseje.apitestautomation.core.response.ApiResponse;
 import io.github.felseje.apitestautomation.util.ArgumentValidator;
 import org.awaitility.Awaitility;
 
@@ -14,14 +14,14 @@ public class RetryRequest {
 
     private static final String NULL_TIME_UNIT_ERROR = "The 'unit' cannot be null";
 
-    private final Supplier<ResponseContext> action;
+    private final Supplier<ApiResponse> action;
     private Duration timeout = Duration.ofSeconds(10);
     private Duration poll = Duration.ofMillis(500);
     private RetryStrategy strategy = RetryStrategy.AT_MOST;
     private Duration minDuration;
     private Duration maxDuration;
 
-    public RetryRequest(Supplier<ResponseContext> action) {
+    public RetryRequest(Supplier<ApiResponse> action) {
         ArgumentValidator.requireNotNull(action, "The 'action' cannot be null");
         this.action = action;
     }
@@ -55,16 +55,16 @@ public class RetryRequest {
         return this;
     }
 
-    public ResponseContext until(Predicate<ResponseContext> condition) {
+    public ApiResponse until(Predicate<ApiResponse> condition) {
         ArgumentValidator.requireNotNull(condition, "The 'condition' cannot be null");
-        AtomicReference<ResponseContext> last = new AtomicReference<>();
+        AtomicReference<ApiResponse> last = new AtomicReference<>();
         switch (strategy) {
             case AT_MOST -> Awaitility.await()
                     .atMost(timeout)
                     .pollInterval(poll)
                     .ignoreExceptions()
                     .until(() -> {
-                        ResponseContext response = action.get();
+                        ApiResponse response = action.get();
                         last.set(response);
                         return condition.test(response);
                     });
@@ -74,7 +74,7 @@ public class RetryRequest {
                         .pollInterval(poll)
                         .ignoreExceptions()
                         .until(() -> {
-                            ResponseContext response = action.get();
+                            ApiResponse response = action.get();
                             last.set(response);
                             return condition.test(response);
                         });
@@ -85,7 +85,7 @@ public class RetryRequest {
                     .pollInterval(poll)
                     .ignoreExceptions()
                     .until(() -> {
-                        ResponseContext response = action.get();
+                        ApiResponse response = action.get();
                         last.set(response);
                         return condition.test(response);
                     });

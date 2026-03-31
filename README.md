@@ -64,7 +64,8 @@ src/
              ├── util/              # Utility classes
              └── exception/         # Standard framework exceptions
 resources/
- └── config.properties              # Default project properties file
+ └── config/
+      └── config.properties         # Default project properties file
 ```
 ## Example Tests
 

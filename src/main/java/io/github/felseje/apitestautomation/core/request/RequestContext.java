@@ -17,6 +17,8 @@ public class RequestContext {
     private final Map<String, Object> headers;
     private final Map<String, Object> queryParams;
     private final Map<String, Object> pathParams;
+    private final Map<String, Object> multipartParts;
+    private final Map<String, Object> formParams;
     private final Object body;
     private final ContentType contentType;
 
@@ -26,6 +28,8 @@ public class RequestContext {
         this.headers = Map.copyOf(builder.headers);
         this.pathParams = Map.copyOf(builder.pathParams);
         this.queryParams = Map.copyOf(builder.queryParams);
+        this.multipartParts = Map.copyOf(builder.multipartParts);
+        this.formParams = Map.copyOf(builder.formParams);
         this.body = builder.body;
     }
 
@@ -35,11 +39,13 @@ public class RequestContext {
 
     public static class RequestContextBuilder {
 
-        private String baseUrl;
-        private ContentType contentType;
         private final Map<String, Object> headers = new HashMap<>();
         private final Map<String, Object> queryParams = new HashMap<>();
         private final Map<String, Object> pathParams = new HashMap<>();
+        private final Map<String, Object> multipartParts = new HashMap<>();
+        private final Map<String, Object> formParams = new HashMap<>();
+        private String baseUrl;
+        private ContentType contentType;
         private Object body;
 
         public RequestContextBuilder baseUrl(String baseUrl) {
@@ -59,6 +65,16 @@ public class RequestContext {
 
         public RequestContextBuilder pathParam(String key, Object value) {
             pathParams.put(key, value);
+            return this;
+        }
+
+        public RequestContextBuilder multipartPart(String key, Object value) {
+            multipartParts.put(key, value);
+            return this;
+        }
+
+        public RequestContextBuilder formParam(String key, Object value) {
+            formParams.put(key, value);
             return this;
         }
 

@@ -3,7 +3,9 @@ package io.github.felseje.apitestautomation.core.client;
 import io.github.felseje.apitestautomation.core.request.RequestContext;
 import io.github.felseje.apitestautomation.factory.RequestSpecificationFactory;
 import io.github.felseje.apitestautomation.factory.ResponseSpecificationFactory;
+import io.github.felseje.apitestautomation.util.Strings;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.http.Method;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -47,7 +49,7 @@ public abstract class AbstractClient {
         RequestSpecification requestSpecification = RequestSpecificationFactory.getStandard();
         ResponseSpecification responseSpecification = ResponseSpecificationFactory.getStandard();
 
-        if (context.getBaseUrl() != null) {
+        if (!Strings.isBlank(context.getBaseUrl())) {
             requestSpecification.baseUri(context.getBaseUrl());
         }
 
@@ -63,12 +65,24 @@ public abstract class AbstractClient {
             requestSpecification.queryParams(context.getQueryParams());
         }
 
-        if (context.getContentType() != null) {
-            requestSpecification.contentType(context.getContentType());
-        }
-
-        if (context.getBody() != null) {
+        if (!context.getMultipartParts().isEmpty()) {
+            context.getMultipartParts().forEach(requestSpecification::multiPart);
+        } else if (!context.getFormParams().isEmpty()) {
+            context.getFormParams().forEach(requestSpecification::formParam);
+            if (context.getContentType() != null) {
+                requestSpecification.contentType(context.getContentType());
+            } else {
+                requestSpecification.contentType(ContentType.URLENC);
+            }
+        } else if (context.getBody() != null) {
             requestSpecification.body(context.getBody());
+            if (context.getContentType() != null) {
+                requestSpecification.contentType(context.getContentType());
+            } else {
+                requestSpecification.contentType(ContentType.JSON);
+            }
+        } else {
+            requestSpecification.noContentType();
         }
 
         return RestAssured.given(requestSpecification, responseSpecification)

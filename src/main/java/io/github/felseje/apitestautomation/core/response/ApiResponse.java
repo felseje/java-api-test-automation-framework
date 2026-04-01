@@ -139,6 +139,31 @@ public class ApiResponse {
         return this;
     }
 
+    public boolean isInformational() {
+        return isStatusCodeInRange(100, 200);
+    }
+
+    public boolean isSuccess() {
+        return isStatusCodeInRange(200, 300);
+    }
+
+    public boolean isRedirection() {
+        return isStatusCodeInRange(300, 400);
+    }
+
+    public boolean isClientError() {
+        return isStatusCodeInRange(400, 500);
+    }
+
+    public boolean isServerError() {
+        return isStatusCodeInRange(500, 600);
+    }
+
+    public boolean isStatusCodeInRange(int fromInclusive, int toExclusive) {
+        int statusCode = response.getStatusCode();
+        return statusCode >= fromInclusive && statusCode < toExclusive;
+    }
+
     public Response raw() {
         return response;
     }

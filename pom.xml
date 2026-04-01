@@ -6,7 +6,7 @@
 
     <groupId>io.github.felseje</groupId>
     <artifactId>java-api-test-automation-framework</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 
     <properties>
         <owner.version>1.0.12</owner.version>

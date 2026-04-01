@@ -1,15 +1,14 @@
 package io.github.felseje.apitestautomation.config;
 
 import io.github.felseje.apitestautomation.exception.ConfigurationException;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aeonbits.owner.ConfigCache;
 
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ConfigurationManager {
-
-    private ConfigurationManager() {
-        throw new IllegalStateException("Utility class cannot be instantiated");
-    }
 
     public static Config getConfig() {
         try {
